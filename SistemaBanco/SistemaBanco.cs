@@ -45,8 +45,8 @@ namespace SistemaBanco
                 {
                     Console.WriteLine("4. Aplicar interés");
                 }
-                       
-                    Console.WriteLine("5. Salir");
+                    Console.WriteLine("5. Ver Movimientos");
+                    Console.WriteLine("6. Salir");
                     Console.WriteLine();
                     Console.Write("Seleccione una opción: ");
 
@@ -99,6 +99,10 @@ namespace SistemaBanco
                             break;
 
                         case "5":
+                        cuenta.MostrarMovimientos();
+                        break;
+
+                    case "6":
                             Console.WriteLine("Saliendo del sistema. ¡Hasta luego!");
                             return;
 

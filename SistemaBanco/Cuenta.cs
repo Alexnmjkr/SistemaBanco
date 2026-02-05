@@ -11,15 +11,18 @@ namespace SistemaBanco
         public string Titular { get; set; }
         public double Saldo { get; protected set; }
 
+        protected List<string> Movimientos;
         public Cuenta (string titular)
         {
             Titular = titular;
             Saldo = 0;
+            Movimientos = new List<string>();
         }
 
         public virtual void Depositar(double monto)
         {
             Saldo += monto;
+            Movimientos.Add($"Depósito: ${monto}");
             Console.WriteLine("Depósito exitoso. Saldo actual: $" + Saldo);
         } 
         
@@ -28,6 +31,7 @@ namespace SistemaBanco
             if (monto <= Saldo)
             {
                 Saldo -= monto;
+                Movimientos.Add($"Retiro: ${monto}");
                 Console.WriteLine("Retiro realizado correctamente");
                 return true;
             }
@@ -38,6 +42,20 @@ namespace SistemaBanco
         {
             Console.WriteLine($"Titular: {Titular}");
             Console.WriteLine($"Saldo actual: ${Saldo}");
+        }
+
+        public void MostrarMovimientos()
+        {
+            Console.WriteLine("Movimientos:");
+            if (Movimientos.Count == 0)
+            {
+                Console.WriteLine("No se registraron movimientos");
+            }
+
+            foreach (var movimiento in Movimientos)
+            {
+                Console.WriteLine(movimiento);
+            }
         }
     }
 }

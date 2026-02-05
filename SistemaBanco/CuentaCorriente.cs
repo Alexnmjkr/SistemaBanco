@@ -21,6 +21,7 @@ namespace SistemaBanco
             if (monto <= Saldo + LimiteSobregiro)
             {
                 Saldo -= monto;
+                Movimientos.Add($"Retiro: ${monto}");
                 Console.WriteLine("Retiro realizado (con sobregiro si aplica).");
                 return true;
             }
