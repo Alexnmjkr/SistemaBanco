@@ -18,7 +18,12 @@ namespace SistemaBanco
         //Sobrescribe el método Retirar de la clase base
         public override bool Retirar(double monto)
         {
-            if (monto <= Saldo + LimiteSobregiro)
+            if (!MontoValido(monto))
+            {
+                Console.WriteLine("El monto debe ser mayor que cero");
+                return false;
+            }
+            if (monto <= Saldo + LimiteDescubierto)
             {
                 Saldo -= monto;
                 Movimientos.Add($"Retiro: ${monto}");

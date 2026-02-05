@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SistemaBanco
 {
-    internal class Cuenta
+    class Cuenta
     {
         public string Titular { get; set; }
         public double Saldo { get; protected set; }
@@ -19,8 +19,17 @@ namespace SistemaBanco
             Movimientos = new List<string>();
         }
 
+        protected bool MontoValido(double monto)
+        {
+            return monto > 0;
+        }
+
         public virtual void Depositar(double monto)
         {
+            if (!MontoValido(monto))
+            {
+                Console.WriteLine("El monto debe ser mayor que cero");
+            }
             Saldo += monto;
             Movimientos.Add($"Depósito: ${monto}");
             Console.WriteLine("Depósito exitoso. Saldo actual: $" + Saldo);
@@ -28,16 +37,23 @@ namespace SistemaBanco
         
         public virtual bool Retirar(double monto)
         {
-            if (monto <= Saldo)
+            if (!MontoValido(monto))
             {
-                Saldo -= monto;
+                Console.WriteLine("El monto debe ser mayor que cero");
+                return false;
+            }
+
+            if (monto <= Saldo)
+            { Saldo -= monto;
                 Movimientos.Add($"Retiro: ${monto}");
                 Console.WriteLine("Retiro realizado correctamente");
                 return true;
             }
+
             Console.WriteLine("Fondos insuficientes.");
             return false;
         }
+
         public void MostrarSaldo ()
         {
             Console.WriteLine($"Titular: {Titular}");
@@ -52,9 +68,9 @@ namespace SistemaBanco
                 Console.WriteLine("No se registraron movimientos");
             }
 
-            foreach (var movimiento in Movimientos)
+            foreach (string mov in Movimientos)
             {
-                Console.WriteLine(movimiento);
+                Console.WriteLine(mov);
             }
         }
     }
